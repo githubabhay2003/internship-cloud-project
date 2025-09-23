@@ -77,51 +77,31 @@ pipeline {
 
 
         stage('Deploy to EC2') {
-
             steps {
-
                 sshagent([env.EC2_SSH_KEY_ID]) {
-
                     sh """
-
                         ssh -o StrictHostKeyChecking=no ubuntu@${env.EC2_SERVER_IP} '
-
-                            # Create the app directory if it doesn't exist
-
-                            mkdir -p /home/ubuntu/app &&
-
+                            # Use sudo to create the directory, then set the ubuntu user as the owner
+                            sudo mkdir -p /home/ubuntu/app &&
+                            sudo chown -R ubuntu:ubuntu /home/ubuntu/app &&
+                            
+                            # Now, cd into the directory as the ubuntu user
                             cd /home/ubuntu/app &&
-
                             
-
                             # Clone the repo if the directory is empty, otherwise pull the latest changes
-
                             if [ ! -d .git ]; then
-
                                 git clone https://github.com/githubabhay2003/internship-cloud-project.git .
-
                             else
-
                                 git pull
-
                             fi &&
-
                             
-
                             # Use Docker Compose to pull the latest image and restart the service
-
                             docker compose pull &&
-
                             docker compose up -d
-
                         '
-
                     """
-
                 }
-
             }
-
         }
 
     }
