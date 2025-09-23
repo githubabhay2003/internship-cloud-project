@@ -89,36 +89,29 @@ pipeline {
 
 
         stage('Deploy to EC2') {
-
             steps {
-
-                // Use the SSH Agent plugin to securely connect to our EC2 instance
-
                 sshagent([env.EC2_SSH_KEY_ID]) {
-
                     sh """
-
                         ssh -o StrictHostKeyChecking=no ubuntu@${env.EC2_SERVER_IP} '
-
+                            # Create the app directory if it doesn't exist
+                            mkdir -p /home/ubuntu/app &&
                             cd /home/ubuntu/app &&
-
-                            echo "DOCKER_IMAGE=${env.DOCKER_IMAGE_NAME}:latest" > .env &&
-
+                            
+                            # Clone the repo if the directory is empty, otherwise pull the latest changes
+                            if [ ! -d .git ]; then
+                                git clone https://github.com/githubabhay2003/internship-cloud-project.git .
+                            else
+                                git pull
+                            fi &&
+                            
+                            # Use Docker Compose to pull the latest image and restart the service
                             docker compose pull &&
-
                             docker compose up -d
-
                         '
-
                     """
-
                 }
-
             }
-
         }
-
-    }
 
     
 
