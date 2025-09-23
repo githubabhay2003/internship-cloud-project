@@ -8,7 +8,7 @@ pipeline {
 
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
 
-        DOCKER_IMAGE_NAME        = 'instantprachi/internship-project' // Using your DockerHub username and a new image name
+        DOCKER_IMAGE_NAME        = 'abhaydocker732/internship-project' // Using your DockerHub username and a new image name
 
         EC2_SERVER_IP          = '52.66.185.145'
 
