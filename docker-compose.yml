@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  webapp:
+    image: instantprachi/instantprachi:latest # This will be the image our Jenkins pipeline builds
+    container_name: webapp
+    ports:
+      - "80:80"
+    restart: always
