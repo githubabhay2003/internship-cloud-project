@@ -10,7 +10,7 @@ pipeline {
 
         DOCKER_IMAGE_NAME        = 'abhaydocker732/internship-project'
 
-        EC2_SERVER_IP          = '52.66.185.145' // Make sure this IP is correct!
+        EC2_SERVER_IP          = '13.200.139.183' // Make sure this IP is correct!
 
         EC2_SSH_KEY_ID         = 'ec2-ssh-key'
 
